@@ -1,0 +1,4 @@
+
+type Query{
+  saludo(name:String!):String
+}
