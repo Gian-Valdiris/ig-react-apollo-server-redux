@@ -1,4 +1,38 @@
+type User{
+  id:ID
+  name:String
+  username:String
+  email:String
+  avatar:String
+  siteWeb:String
+  description:String
+  password:String
+  createAt:String
+}
+
+input AuthCreateUser{
+
+  name:String!
+  username:String!
+  email:String!
+  password:String!
+
+}
+
+type Token{
+  token:String
+}
+
+input AuthInputLogin{
+  email:String!
+  password:String!
+}
 
 type Query{
-  saludo(name:String!):String
+  login(input:AuthInputLogin):Token
+}
+
+type Mutation{
+  #user
+  register(input:AuthCreateUser):User
 }

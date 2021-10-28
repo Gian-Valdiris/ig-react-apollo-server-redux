@@ -9,7 +9,7 @@ import {toast} from 'react-toastify';
 import * as yup from 'yup';
 
 export default function RegisterForm({ setShowLogin }) {
-
+  
   const [createUser,{error,loading}] = useMutation(REGISTER_MUTATION,{
     onCompleted(){
       toast.success('Usuario creado')
@@ -17,7 +17,6 @@ export default function RegisterForm({ setShowLogin }) {
     },
     onError(e){}
   });
-
   const Formik = useFormik({
     initialValues: {
       name: '',

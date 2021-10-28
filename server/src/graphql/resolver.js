@@ -1,10 +1,13 @@
-
+const {createUser,loginUser} = require('../controllers/user');
 const resolvers = {
 
   Query:{
-    saludo(){
-      return 'Hola a todos'
-    }
+    login:(_,{input})=>loginUser(input)
+  },
+  Mutation:{
+    // User
+    register:async(_,{input})=>createUser(input)
+
   }
 }
 module.exports =   resolvers;
