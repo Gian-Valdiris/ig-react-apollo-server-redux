@@ -1,4 +1,4 @@
-## Nota 
+## NO ESTA TERMINADO OK. 
   make file .env in server 
   sample
   server
