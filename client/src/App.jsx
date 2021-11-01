@@ -1,13 +1,12 @@
 import Auth from './pages/auth/Auth';
 import { ToastContainer} from 'react-toastify';
-
+import {useSelector} from 'react-redux';
+import AppRouter from './routes/Navigation';
 function App() {
-  // const [auth,setAuth]=useState(undefined);
-  const auth =false;
-
+  const {token:auth} = useSelector(state=>state.authReducer)
   return (
     <div>
-      {!auth?<Auth />:<h1>Estas logeado</h1>}
+      {!auth?<Auth />:<AppRouter />}
       <ToastContainer />
     </div>
   );

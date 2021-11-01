@@ -1,16 +1,22 @@
 import '../../../scss/index.sass';
 import './LoginForm.sass';
 import * as yup from 'yup';
+import jwtDecode from 'jwt-decode';
 import { useFormik } from 'formik';
+import {setUser} from '../../../redux/reducers/userAuth';
 import { Form, Button } from 'semantic-ui-react';
 import {QUERY_LOGIN} from '../../../graphql/Querys';
 import {useLazyQuery} from '@apollo/client';
 import {toast} from 'react-toastify';
+import {useDispatch} from 'react-redux';
 
 export default function LoginForm() {
+  const dispath = useDispatch();
   const [makeLogin,{loading}] = useLazyQuery(QUERY_LOGIN,{
-    onCompleted(data){
-      console.log(data);
+
+    onCompleted({login}){
+      const decode= jwtDecode(login.token)
+      dispath(setUser({token:login.token,decode}))
     },
     onError({message}){
       toast.error(message);
