@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "graphql": "^15.6.1",
     "graphql-import-node": "^0.0.4",
+    "graphql-upload": "^13.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.11",
     "morgan": "^1.10.0",

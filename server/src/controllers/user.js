@@ -1,8 +1,10 @@
 const ModelUser = require('../db/models/User');
 const bcryptjs = require('bcryptjs') 
+const fs = require('fs');
 const {createToken} = require('../helpers/createToken');
 
 async function createUser(input){
+  
   input.email=input.email.toLowerCase();
   input.username=input.username.toLowerCase();
   const {email,username} = input;
@@ -44,8 +46,35 @@ async function loginUser({email,password}){
     return {token}
   }
 } 
+async function getDataUser(username){
+
+  // buscar por username e igual buscar por id 
+  const user = await ModelUser.findOne({username})
+  if (!user){
+    const userbyId = await ModelUser.findById(username);
+    if (!userbyId){
+      throw new Error('No se encontro el usuario')
+    }
+    return userbyId
+  }
+  return user;
+}
+
+
+async function updateAvatarC({file}){
+  const {createReadStream,filename,mimetype,encoding} = file;
+  // fs.createWriteStream(__dirname,'/')
+  createReadStream().pipe(
+    fs.createWriteStream(`${__dirname}${filename}`)
+  )
+  const data = fs.readFileSync(`${__dirname}${filename}`);
+  console.log(data)
+  return null;
+}
 
 module.exports={
   createUser,
-  loginUser
+  loginUser,
+  getDataUser,
+  updateAvatarC
 }

@@ -1,0 +1,26 @@
+.profile{
+  margin-top:20px !important;
+  &__left{
+    display: flex !important;
+    justify-content: center;
+    .ui.image.avatar{
+      width: 170px !important;
+      height: 170px !important;;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
+  &__right{
+    .other{
+      .name{
+        font-size: px;
+        font-weight: bold;
+      }
+      .description{
+        margin-top: 10px ;
+      }
+    }
+  }
+
+}

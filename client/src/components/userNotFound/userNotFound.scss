@@ -1,0 +1,12 @@
+.user-not-found{
+  p{
+    text-align: center;
+  }
+  & :nth-child(1){
+    font-size: 20px;
+  }
+  a{
+    display: block;
+    text-align: center;
+  }
+}

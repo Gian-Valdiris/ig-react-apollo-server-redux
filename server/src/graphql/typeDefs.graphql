@@ -1,3 +1,9 @@
+# CREANDO LOS TYPEDEF, estos son los tipos de definicion de mi shema,
+# Tipos de datis en graphQl
+#   ID,String,Int,Float,Boolean,Date
+# si al final de la declaracion de un campo, usted encuentra un '!', entonces significa que es obliglatorio
+scalar Upload
+
 type User{
   id:ID
   name:String
@@ -10,29 +16,38 @@ type User{
   createAt:String
 }
 
-input AuthCreateUser{
+# Los input en graphQL nos sirven para indicar que vamos a recibir una entrada de datos
 
+# Input para el registro de usuario 
+input AuthCreateUser{
   name:String!
   username:String!
   email:String!
   password:String!
-
 }
 
 type Token{
   token:String
 }
-
+# Input para el Login de usuario
 input AuthInputLogin{
   email:String!
   password:String!
 }
+type UpdateAvatar {
+  status:Boolean,
+  urlAvatar:String
+}
 
+# Aqui dentro de Query todas mis querys 
 type Query{
+  # Un ejemplo aqui tenemos una query que se llama login y recibe como parametro el AuthInputLogin, y esta me devuelve el token
   login(input:AuthInputLogin):Token
+  getUser(username:String):User
 }
 
 type Mutation{
-  #user
+  #Un ejemplo, aqui tenemos una mutacion que se llama register esta recibe como parametro el AuthCreateUser y devuelve un User
   register(input:AuthCreateUser):User
+  updateAvatar(file:Upload!):UpdateAvatar
 }

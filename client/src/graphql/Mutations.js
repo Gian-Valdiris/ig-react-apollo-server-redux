@@ -11,6 +11,16 @@ const REGISTER_MUTATION = gql`
   }
 `;
 
+const UPDATE_AVATAR= gql`
+mutation Mutation($file: Upload!) {
+  updateAvatar(file: $file) {
+    status
+    urlAvatar
+  }
+}`;
+
 export {
-  REGISTER_MUTATION
+  REGISTER_MUTATION,
+  UPDATE_AVATAR
+
 }

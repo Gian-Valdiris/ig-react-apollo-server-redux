@@ -1,12 +1,12 @@
 import {Container} from 'semantic-ui-react';
-
+import Header from '../components/header/index';
 function LayoutBasic({children}) {
 
   return (
-    <h1>
-      Layout Basic
+    <div>
+      <Header />
       {children}
-    </h1>
+    </div>
   )
 }
 
