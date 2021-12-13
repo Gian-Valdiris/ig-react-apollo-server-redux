@@ -1,4 +1,4 @@
-const {createUser,loginUser,getDataUser, updateAvatarC} = require('../controllers/user');
+const {createUser,loginUser,getDataUser, updateAvatarC,deleteAvatarI} = require('../controllers/user');
 
 const resolvers = {
 
@@ -9,8 +9,8 @@ const resolvers = {
   Mutation:{
     // User
     register:async(_,{input})=>createUser(input),
-    updateAvatar:async(_,{file})=>updateAvatarC(file)
-
+    updateAvatar:async(_,{file},ctx)=>updateAvatarC(file,ctx),
+    deleteAvatar:async(_,__,ctx)=>deleteAvatarI(ctx)
   }
 }
 module.exports =   resolvers;

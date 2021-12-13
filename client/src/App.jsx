@@ -1,12 +1,18 @@
 import Auth from './pages/auth/Auth';
-import { ToastContainer} from 'react-toastify';
-import {useSelector} from 'react-redux';
 import AppRouter from './routes/Navigation';
+import { ToastContainer} from 'react-toastify';
+
+import {useSelector} from 'react-redux';
+
 function App() {
-  const {token:auth} = useSelector(state=>state.authReducer)
+  const {token} = useSelector(state=>state.authReducer)
   return (
     <div>
-      {!auth?<Auth />:<AppRouter />}
+      {
+        !token?
+          (<Auth />):
+          (<AppRouter />)
+      }
       <ToastContainer />
     </div>
   );

@@ -19,8 +19,18 @@ mutation Mutation($file: Upload!) {
   }
 }`;
 
+const DELETE_AVATAR = gql `
+
+mutation Mutation {
+  deleteAvatar
+  
+}
+
+
+
+`;
 export {
   REGISTER_MUTATION,
-  UPDATE_AVATAR
-
+  UPDATE_AVATAR,
+  DELETE_AVATAR
 }

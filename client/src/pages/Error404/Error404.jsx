@@ -6,6 +6,7 @@ export default function   Error404(){
     <div>
       <h3>
         Error 404...
+        NO se encontro
       </h3>
     </div>
   )

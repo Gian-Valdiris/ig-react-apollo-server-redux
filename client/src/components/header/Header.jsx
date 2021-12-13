@@ -1,33 +1,34 @@
 import './Header.scss';
-import React from 'react'
-import Logo from '../../assets/instaclone.png'
-import {Container,Grid,Image} from 'semantic-ui-react';
+
 import {Link} from 'react-router-dom';
+import {Container,Grid,Image} from 'semantic-ui-react';
+
 import RigthHeader from './RigthHeader';
+import Logo from '../../assets/instaclone.png'
+
+const  {Column} = Grid; 
 function Header () {
   return (
     <div className='header' >
-        <Container>
+      <Container>
+        <Grid>
 
-          <Grid>
-            
-            <Grid.Column width={3}  className="header-logo pointer">
-              <Link to = '/'>
-                <Image src = {Logo} />
-              </Link>
-            </Grid.Column>
-            
-            <Grid.Column width={10}>
-              Buscador
-            </Grid.Column>
+          <Column width={3}  className="header-logo pointer">
+            <Link to = '/'>
+              <Image src = {Logo} />
+            </Link>
+          </Column>
+          
+          <Column width={10}>
+            Buscador
+          </Column>
 
-            <Grid.Column width={3}>
-                <RigthHeader />
-            </Grid.Column>
-            
-          </Grid>
-
-        </Container>
+          <Column width={3}>
+            <RigthHeader />
+          </Column>
+        
+        </Grid>
+      </Container>
     </div>
   )
 }

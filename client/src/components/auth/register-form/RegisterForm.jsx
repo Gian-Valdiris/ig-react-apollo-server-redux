@@ -1,21 +1,23 @@
-import React,{ Fragment} from 'react';
 import './RegisterForm.sass';
-import {useMutation} from '@apollo/client';
-import {REGISTER_MUTATION} from '../../../graphql/Mutations';
-import '../../../scss/index.sass';
-import { useFormik } from 'formik';
-import { Form, Button } from 'semantic-ui-react';
-import {toast} from 'react-toastify';
+
 import * as yup from 'yup';
+import {toast} from 'react-toastify';
+import { useFormik } from 'formik';
+import {useMutation} from '@apollo/client';
+import { Form, Button } from 'semantic-ui-react';
+
+import {REGISTER_MUTATION} from '../../../graphql/Mutations';
 
 export default function RegisterForm({ setShowLogin }) {
   
   const [createUser,{error,loading}] = useMutation(REGISTER_MUTATION,{
     onCompleted(){
       toast.success('Usuario creado')
-      setShowLogin(ant=>!ant);
+      setShowLogin(true);
     },
-    onError(e){}
+    onError({message}){
+      toast.error('No se pudo registar un usuario')
+    }
   });
   const Formik = useFormik({
     initialValues: {
@@ -58,15 +60,13 @@ export default function RegisterForm({ setShowLogin }) {
     }),
   });
   return (
-    <Fragment>
+    <>
+
       <h2 className='register-form-title'>
         Registrate para ver fotos y videos de tus amigos
       </h2>
-      <Form
-        className='register-form'
-        onSubmit={Formik.handleSubmit}
-        loading={loading}
-      >
+      <Form className='register-form' onSubmit={Formik.handleSubmit} loading={loading}>
+
         <Form.Field
           className='formg'
           control={Form.Input}
@@ -90,9 +90,11 @@ export default function RegisterForm({ setShowLogin }) {
           onChange={Formik.handleChange}
         />
         <span className='error-form'>
-          {Formik.errors.username &&
+          {
+            Formik.errors.username &&
             Formik.touched.username &&
-            Formik.errors.username}
+            Formik.errors.username
+          }
         </span>
 
         <Form.Field
@@ -118,9 +120,11 @@ export default function RegisterForm({ setShowLogin }) {
           onChange={Formik.handleChange}
         />
         <span className='error-form'>
-          {Formik.errors.password &&
+          {
+            Formik.errors.password &&
             Formik.touched.password &&
-            Formik.errors.password}
+            Formik.errors.password
+          }
         </span>
         <Form.Field
           className='formg'
@@ -132,17 +136,17 @@ export default function RegisterForm({ setShowLogin }) {
           onChange={Formik.handleChange}
         />
         <span className='error-form'>
-          {Formik.errors.confirmPassword &&
+          {
+            Formik.errors.confirmPassword &&
             Formik.touched.confirmPassword &&
-            Formik.errors.confirmPassword}
+            Formik.errors.confirmPassword
+          }
         </span>
-        <Button primary type='submit' className='mt-5'>
-          Registrate
-        </Button>
+        <Button primary type='submit' className='mt-5'> Registrate </Button>
         {
           error && <p>{error.message}</p>
         } 
       </Form>
-    </Fragment>
+    </>
   );
 }

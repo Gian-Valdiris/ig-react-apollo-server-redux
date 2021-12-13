@@ -49,5 +49,6 @@ type Query{
 type Mutation{
   #Un ejemplo, aqui tenemos una mutacion que se llama register esta recibe como parametro el AuthCreateUser y devuelve un User
   register(input:AuthCreateUser):User
-  updateAvatar(file:Upload!):UpdateAvatar
+  updateAvatar(file:Upload):UpdateAvatar
+  deleteAvatar:Boolean
 }

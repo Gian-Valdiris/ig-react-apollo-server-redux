@@ -1,24 +1,18 @@
 import {configureStore} from '@reduxjs/toolkit';
-import { rootReducer } from './rootReducer';
+import {persistStore,persistReducer,FLUSH,REHYDRATE,PAUSE,PERSIST,PURGE,REGISTER} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import { PersistGate } from 'redux-persist/integration/react'
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist'
+
+import { rootReducer } from './rootReducer';
+
+// Configuracion del persistor
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
 }
+// Crear mi reducerPersistido
 const persistedReducer = persistReducer(persistConfig, rootReducer)
-
+// Proceder a crear mi storage
 const store = configureStore({
   reducer:persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -28,10 +22,10 @@ const store = configureStore({
       },
     }),
 });
+
 const persistor = persistStore(store)
 
 export {
   persistor,
   store,
-  PersistGate
 }

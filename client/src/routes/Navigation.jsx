@@ -8,17 +8,19 @@ export default function AppRouter() {
     <div>
       <Router>
         <Switch>
-          {map(routes, ({ Layout, Component, ...rest }, index) => (
-            <Route
-              key={index}
-              {...rest}
-              render={(props) => (
-                <Layout>
-                  <Component {...props} />
-                </Layout>
-              )}
-            />
-          ))}
+          {
+            map(routes, ({ Layout, Component, ...rest }, index) => (
+              <Route
+                key={index}
+                {...rest}
+                render={(props) => (
+                  <Layout>
+                    <Component {...props} />
+                  </Layout>
+                )}
+              />
+            ))
+          }
         </Switch>
       </Router>
     </div>

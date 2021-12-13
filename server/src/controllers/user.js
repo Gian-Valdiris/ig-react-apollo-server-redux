@@ -1,6 +1,8 @@
 const ModelUser = require('../db/models/User');
 const bcryptjs = require('bcryptjs') 
 const fs = require('fs');
+// const {awsUploadImage} = require('../../utils/aws-upload-image');
+const {awsUploadImage} = require('../utils/aws-upload-image');
 const {createToken} = require('../helpers/createToken');
 
 async function createUser(input){
@@ -61,20 +63,52 @@ async function getDataUser(username){
 }
 
 
-async function updateAvatarC({file}){
-  const {createReadStream,filename,mimetype,encoding} = file;
-  // fs.createWriteStream(__dirname,'/')
-  createReadStream().pipe(
-    fs.createWriteStream(`${__dirname}${filename}`)
-  )
-  const data = fs.readFileSync(`${__dirname}${filename}`);
-  console.log(data)
-  return null;
+async function updateAvatarC({file},ctx){
+  
+  if( !ctx.user){
+    throw new Error('!token')
+  }
+
+  const idUser=ctx.user.id;
+  const {createReadStream,mimetype} = await file;
+  const path = `avatar/${idUser}.${mimetype.split('/')[1]}`;
+  const fileData = createReadStream();
+
+  try{
+    const result = await awsUploadImage(fileData,path)
+    await ModelUser.findByIdAndUpdate(idUser,{
+      avatar:result
+    })
+    return {
+      status:true,
+      urlAvatar:result
+    }
+  }
+  catch({message:error}){
+    console.log({error})
+    throw new Error(error) 
+  }
 }
 
+async function deleteAvatarI(ctx){
+  if(!ctx.user){
+    throw new Error('!token')
+  }
+  const {id} = ctx.user;
+
+  try{
+    await ModelUser.findByIdAndUpdate(id,{avatar:null});
+    console.log(id)
+    return true;
+  }
+  catch({message}){
+    throw new Error(message)
+  }
+}
 module.exports={
   createUser,
   loginUser,
   getDataUser,
-  updateAvatarC
+  updateAvatarC,
+  deleteAvatarI
 }

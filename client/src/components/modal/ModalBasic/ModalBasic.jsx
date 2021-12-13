@@ -1,18 +1,12 @@
+import './ModalBasic.scss';
 
 import {Modal} from 'semantic-ui-react'
-import './ModalBasic.scss';
-function ModalBasic(props) {
-  const {show,setShow,title,children} = props;
-  const onClose=()=>{
-    setShow(false);
-  }
+
+function ModalBasic( {showModal,setShowModal,title,children}) {
+
+
   return (
-    <Modal  
-      size='mini'
-      open={show}
-      onClose={onClose}
-      className='modal-basic'    
-    >
+    <Modal size='mini' open={showModal} onClose={()=>setShowModal(false)} className='modal-basic'>
       {title && <Modal.Header>{title}</Modal.Header>}
       {children}
     </Modal>
