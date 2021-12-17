@@ -38,7 +38,15 @@ type UpdateAvatar {
   status:Boolean,
   urlAvatar:String
 }
+input  UpdateUserInput{
+  username:String
+  email:String
+  currentPassword:String
+  newPassword:String
+  siteWeb:String
+  description:String
 
+}
 # Aqui dentro de Query todas mis querys 
 type Query{
   # Un ejemplo aqui tenemos una query que se llama login y recibe como parametro el AuthInputLogin, y esta me devuelve el token
@@ -50,5 +58,6 @@ type Mutation{
   #Un ejemplo, aqui tenemos una mutacion que se llama register esta recibe como parametro el AuthCreateUser y devuelve un User
   register(input:AuthCreateUser):User
   updateAvatar(file:Upload):UpdateAvatar
-  deleteAvatar:Boolean
+  deleteAvatar:Boolean,
+  updateUser(input:UpdateUserInput):Boolean
 }

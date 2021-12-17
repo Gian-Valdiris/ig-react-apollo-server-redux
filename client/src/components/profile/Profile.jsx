@@ -8,7 +8,10 @@ import {useSelector} from 'react-redux';
 
 import AvatarForm from '../AvatarForm';
 import ModalBasic from '../modal/ModalBasic';
+import HeaderProfile from './HeaderProfile';
+import SettingForm from '../user/settingForm';
 import imageNotFound from '../../assets/avatar.png';
+
 
 const {Column} = Grid;
 
@@ -30,7 +33,12 @@ export default  function  Profile  ({data:{getUser}}){
         setShowModal(true) // para mostar el modal
         break;
       }
-    
+      case 'settigns':{
+        setTitleModal('Editar')
+        setChildrenModal(<SettingForm setShowModal={setShowModal} setChildrenModal={setChildrenModal} setTitleModal={setTitleModal} />)
+        setShowModal(true)
+        break;
+      }
       default:
         break;
     }
@@ -46,7 +54,7 @@ export default  function  Profile  ({data:{getUser}}){
         </Column>
         
         <Column width={11} className='profile__right'>
-          <div>HEADER PROFILE</div>
+          <HeaderProfile getUser={getUser} handleModal={handleModal} />
           <div>Followers</div>
           <div className='other'>
             <p className='name'> {name} </p>

@@ -5,6 +5,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import './scss/colors.sass'
+import './scss/index.sass'
+
 
 import MainComponent from './main'
 ReactDOM.render(

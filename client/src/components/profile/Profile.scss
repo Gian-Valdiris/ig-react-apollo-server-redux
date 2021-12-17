@@ -2,6 +2,9 @@
   margin-top:20px !important;
   &__left{
     display: flex !important;
+    img{
+      object-fit: cover;
+    }
     justify-content: center;
     .ui.image.avatar{
       width: 170px !important;

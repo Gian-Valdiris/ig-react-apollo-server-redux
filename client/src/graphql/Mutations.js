@@ -20,17 +20,19 @@ mutation Mutation($file: Upload!) {
 }`;
 
 const DELETE_AVATAR = gql `
+  mutation Mutation {
+    deleteAvatar
+  }
+`;
 
-mutation Mutation {
-  deleteAvatar
-  
-}
-
-
-
+const UPDATE_PROFILE = gql`
+  mutation Mutation($input: UpdateUserInput) {
+    updateUser(input: $input)
+  }
 `;
 export {
   REGISTER_MUTATION,
   UPDATE_AVATAR,
-  DELETE_AVATAR
+  DELETE_AVATAR,
+  UPDATE_PROFILE
 }

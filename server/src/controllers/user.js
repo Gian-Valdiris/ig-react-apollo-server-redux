@@ -105,10 +105,47 @@ async function deleteAvatarI(ctx){
     throw new Error(message)
   }
 }
+
+async function UpdateUser(input,ctx){
+  if (!ctx.user){
+    throw new Error('No hay un usuario logeado')
+  }
+  const {id} = ctx.user;
+  const {currentPassword,newPassword} = input;
+  // Vemos si viene la clave
+  if (currentPassword){
+    console.log({...input});
+    const user = await ModelUser.findById(id);
+    // verificar si las claves son iguales
+    const eqPass = await  bcryptjs.compareSync(currentPassword,user.password)
+    if (eqPass){
+      // canbiar la contraseña
+      const saltos =  bcryptjs.genSaltSync(10);
+      const newHaskPass = bcryptjs.hashSync(newPassword,saltos);
+      await ModelUser.findByIdAndUpdate(id,{
+        ...input,
+        password:newHaskPass
+      })
+      return true;
+    }
+    else{
+      throw new Error('La contraseña no es valida')
+    }
+  }
+  else{
+    const {password,...newData} = input;
+    const userUpdated = await ModelUser.findByIdAndUpdate(id,newData)
+    return true
+  }
+
+
+};
+
 module.exports={
   createUser,
   loginUser,
   getDataUser,
   updateAvatarC,
-  deleteAvatarI
+  deleteAvatarI,
+  UpdateUser
 }

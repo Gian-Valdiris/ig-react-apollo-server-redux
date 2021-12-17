@@ -1,4 +1,4 @@
-const {createUser,loginUser,getDataUser, updateAvatarC,deleteAvatarI} = require('../controllers/user');
+const {createUser,loginUser,getDataUser, updateAvatarC,deleteAvatarI,UpdateUser} = require('../controllers/user');
 
 const resolvers = {
 
@@ -10,7 +10,8 @@ const resolvers = {
     // User
     register:async(_,{input})=>createUser(input),
     updateAvatar:async(_,{file},ctx)=>updateAvatarC(file,ctx),
-    deleteAvatar:async(_,__,ctx)=>deleteAvatarI(ctx)
+    deleteAvatar:async(_,__,ctx)=>deleteAvatarI(ctx),
+    updateUser:async(_,{input},ctx)=>UpdateUser(input,ctx)
   }
 }
 module.exports =   resolvers;

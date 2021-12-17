@@ -1,0 +1,12 @@
+@import '../../../scss/index.sass';
+.setting-form{
+  display: flex;
+  flex-direction: column;
+  background-color: $background-grey-light !important;
+  button{
+    width: 100%;
+    margin-top: 5px !important;
+    background-color: $background-light !important;
+    border-bottom: 1px solid $border-grey !important;
+  }
+}
