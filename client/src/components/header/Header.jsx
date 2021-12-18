@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import {Container,Grid,Image} from 'semantic-ui-react';
 
 import RigthHeader from './RigthHeader';
+import SearchComponent from './Search';
 import Logo from '../../assets/instaclone.png'
 
 const  {Column} = Grid; 
@@ -20,7 +21,7 @@ function Header () {
           </Column>
           
           <Column width={10}>
-            Buscador
+            <SearchComponent />
           </Column>
 
           <Column width={3}>

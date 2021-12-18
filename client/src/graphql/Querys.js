@@ -22,9 +22,21 @@ const QUERY_GET_USER=gql`
   }
 }
 `;
+
+const SEARCH = gql `
+  query Search($search: String) {
+  search(search: $search) {
+    name
+    username
+    avatar
+  }
+}
+
+`;
 export {
   QUERY_LOGIN,
-  QUERY_GET_USER
+  QUERY_GET_USER,
+  SEARCH
 }
 
 

@@ -1,10 +1,11 @@
-const {createUser,loginUser,getDataUser, updateAvatarC,deleteAvatarI,UpdateUser} = require('../controllers/user');
+const {createUser,loginUser,getDataUser, updateAvatarC,deleteAvatarI,UpdateUser, searchUsers} = require('../controllers/user');
 
 const resolvers = {
 
   Query:{
     login:(_,{input})=>loginUser(input),
-    getUser:(_,{username})=>getDataUser(username)
+    getUser:(_,{username})=>getDataUser(username),
+    search:(_,{search},ctx)=>searchUsers(search,ctx)
   },
   Mutation:{
     // User

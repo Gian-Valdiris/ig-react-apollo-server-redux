@@ -1,0 +1,23 @@
+.reusults-search{
+  display: flex;
+  img{
+    object-fit: cover !important;
+    max-width: 50px !important;
+    max-height: 50px !important;
+    border-radius: 50% !important;
+  }
+  .data{
+    padding-left: 20px;
+  }
+}
+.ui.fluid.search{
+  display: flex !important;
+  *{
+    flex: 1 !important;
+  }
+}
+.results.transition.visible{
+  padding: 10px;
+  max-height: 500px;
+  overflow: auto;
+}

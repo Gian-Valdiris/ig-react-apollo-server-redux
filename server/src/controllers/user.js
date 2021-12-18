@@ -137,9 +137,23 @@ async function UpdateUser(input,ctx){
     const userUpdated = await ModelUser.findByIdAndUpdate(id,newData)
     return true
   }
-
-
 };
+
+async function searchUsers(search,ctx){
+  if(!ctx.user){
+    throw new Error('falta token')
+  }
+  try{
+    const users = await ModelUser.find({
+      name:{$regex:search,$options:'i'}
+    })
+    return users;
+  }
+  catch({message}){
+    throw new Error(message)
+  }
+
+}
 
 module.exports={
   createUser,
@@ -147,5 +161,6 @@ module.exports={
   getDataUser,
   updateAvatarC,
   deleteAvatarI,
-  UpdateUser
+  UpdateUser,
+  searchUsers
 }

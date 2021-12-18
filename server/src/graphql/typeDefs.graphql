@@ -53,6 +53,7 @@ type Query{
   # Un ejemplo aqui tenemos una query que se llama login y recibe como parametro el AuthInputLogin, y esta me devuelve el token
   login(input:AuthInputLogin):Token
   getUser(username:String):User
+  search(search:String):[User]
 }
 
 type Mutation{
