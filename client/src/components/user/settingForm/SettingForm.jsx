@@ -27,15 +27,19 @@ const SettingForm = ({setShowModal,setChildrenModal, setTitleModal}) => {
         break;
       case 'change-email':
         setTitleModal('Cambiar el email');
-        setChildrenModal(<FormDataChange type='email' name = 'email'/>)
+        setChildrenModal(<FormDataChange type='email' name = 'email' setShowModal={setShowModal}/>)
         break;
       case 'change-description':
         setTitleModal('Cambiar descripcion');
-        setChildrenModal(<FormDataChange type='text' name ='description' />)
+        setChildrenModal(<FormDataChange type='text' name ='description' setShowModal={setShowModal} />)
         break;
       case 'change-siteweb':
         setTitleModal('Cambiar sitioWeb')
-        setChildrenModal(<FormDataChange type='text' name = 'siteWeb' />)
+        setChildrenModal(<FormDataChange type='text' name = 'siteWeb' setShowModal={setShowModal} />)
+        break;
+      case 'change-name':
+        setTitleModal('Cambiar Nombre');
+        setChildrenModal(<FormDataChange type = 'text' name = 'name' setShowModal={setShowModal} />)
         break;
       default:
         console.log('Opcion incorrecta')
@@ -58,6 +62,7 @@ const SettingForm = ({setShowModal,setChildrenModal, setTitleModal}) => {
       <Button onClick={changeAttr} name = 'change-email'>Cambiar Email</Button>
       <Button onClick={changeAttr} name = 'change-description'>Description</Button>
       <Button onClick={changeAttr} name= 'change-siteweb'>Sitio Web </Button>
+      <Button onClick={changeAttr} name= 'change-name'>Cambiar Nombre </Button>
       <Button onClick={onLogout}>Cerrar seccion</Button>
       <Button onClick={()=>setShowModal(false)}>Cancelar</Button>
     </div>

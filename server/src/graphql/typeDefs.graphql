@@ -45,6 +45,7 @@ input  UpdateUserInput{
   newPassword:String
   siteWeb:String
   description:String
+  name:String
 
 }
 # Aqui dentro de Query todas mis querys 
