@@ -30,9 +30,23 @@ const UPDATE_PROFILE = gql`
     updateUser(input: $input)
   }
 `;
+
+const FOLLOW=gql`
+  mutation Mutation($username: String!) {
+  follow(username: $username)
+}`;
+
+const UN_FOLLOW = gql`
+mutation Mutation($username: String!) {
+  unFollow(username: $username)
+}
+`;
+
 export {
   REGISTER_MUTATION,
   UPDATE_AVATAR,
   DELETE_AVATAR,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
+  FOLLOW,
+  UN_FOLLOW
 }

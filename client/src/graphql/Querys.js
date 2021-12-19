@@ -30,13 +30,18 @@ const SEARCH = gql `
     username
     avatar
   }
-}
+}`;
 
+const IS_FOLLOW = gql`
+  query Query($username: String!) {
+    isFollow(username: $username)
+  }
 `;
 export {
   QUERY_LOGIN,
   QUERY_GET_USER,
-  SEARCH
+  SEARCH,
+  IS_FOLLOW
 }
 
 

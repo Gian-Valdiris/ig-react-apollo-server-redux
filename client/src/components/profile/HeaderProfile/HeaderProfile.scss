@@ -3,14 +3,21 @@
 .header-profile{
   display: flex;
   align-items: center;
-  
   h2{
     button{
       padding: 6px 20px  !important;
       margin-left: 10px !important;
       background-color: transparent !important;
       border: 1px solid $border-grey !important;
-
     }
+  }
+
+  .ui.button.btn-action{
+    background-color: $action !important;
+    color:#fff !important
+  }
+  .ui.button.btn-danger{
+    background-color: $danger !important;
+    color:#fff !important
   }
 }

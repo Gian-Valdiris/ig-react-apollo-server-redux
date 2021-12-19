@@ -54,6 +54,8 @@ type Query{
   login(input:AuthInputLogin):Token
   getUser(username:String):User
   search(search:String):[User]
+  # FOLLOW 
+  isFollow(username:String!):Boolean
 }
 
 type Mutation{
@@ -62,4 +64,7 @@ type Mutation{
   updateAvatar(file:Upload):UpdateAvatar
   deleteAvatar:Boolean,
   updateUser(input:UpdateUserInput):Boolean
+  # FOLLOWERS
+  follow(username:String!):Boolean
+  unFollow(username:String!):Boolean
 }
