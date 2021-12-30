@@ -5,7 +5,10 @@ const http = require('http');
 const jwt = require('jsonwebtoken');
 const {ApolloServer} = require('apollo-server-express');
 const {graphqlUploadExpress} = require('graphql-upload');
+const {subscribe,execute} = require('graphql');
 const {success} = require('consola');// este es un paquete para que las salidas se vean mas agradables
+// Para las suscripciones
+const {SubscriptionServer} = require('subscriptions-transport-ws');
 
 // mis funciones de aqui para abajo
 const connectDb = require('./db');
@@ -25,6 +28,12 @@ async function main(){
   })
   // empezando a crear el server de Apollo
   const httpServer = http.createServer(app);
+
+  const subscriptionServer=SubscriptionServer.create({schema,execute,subscribe},{
+    server:httpServer,
+    path:'/graphql'
+  }) 
+
   const server =  new ApolloServer({
     schema,
     context:async({req})=>{
@@ -43,7 +52,16 @@ async function main(){
       else{
         return null
       }
-    }
+    },
+    plugins: [{
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            subscriptionServer.close();
+          }
+        };
+      }
+    }],
   })
   await server.start();// -> esto es de la version 3.0
   server.applyMiddleware({app:app})// le pasamos el app de express como middleware

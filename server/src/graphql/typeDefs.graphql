@@ -56,7 +56,10 @@ type Query{
   search(search:String):[User]
   # FOLLOW 
   isFollow(username:String!):Boolean
+  followers(username:String!):[User]
 }
+
+
 
 type Mutation{
   #Un ejemplo, aqui tenemos una mutacion que se llama register esta recibe como parametro el AuthCreateUser y devuelve un User
@@ -67,4 +70,8 @@ type Mutation{
   # FOLLOWERS
   follow(username:String!):Boolean
   unFollow(username:String!):Boolean
+  crearPost(name:String):Boolean
+}
+type Subscription {
+  postCreated(name:String): String
 }

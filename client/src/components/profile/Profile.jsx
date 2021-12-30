@@ -10,6 +10,7 @@ import AvatarForm from '../AvatarForm';
 import ModalBasic from '../modal/ModalBasic';
 import HeaderProfile from './HeaderProfile';
 import SettingForm from '../user/settingForm';
+import Followers from './followers';
 import imageNotFound from '../../assets/avatar.png';
 
 
@@ -55,7 +56,7 @@ export default  function  Profile  ({data:{getUser}}){
         
         <Column width={11} className='profile__right'>
           <HeaderProfile getUser={getUser} handleModal={handleModal} />
-          <div>Followers</div>
+          <Followers username={username} />
           <div className='other'>
             <p className='name'> {name} </p>
             {siteWeb && (<a href = {siteWeb} >{siteWeb}</a>)}

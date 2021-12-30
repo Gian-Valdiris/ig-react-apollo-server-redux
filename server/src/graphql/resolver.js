@@ -1,3 +1,6 @@
+const  { PubSub,withFilter } = require('graphql-subscriptions');
+const pubsub = new PubSub();
+
 const {
   createUser,
   loginUser,
@@ -11,9 +14,11 @@ const {
 const {
   followController,
   isFollowController,
-  unFollowController
+  unFollowController,
+  followersController
 
 }= require('../controllers/follow');
+
 
 const resolvers = {
     Query:{    
@@ -21,7 +26,8 @@ const resolvers = {
     getUser:(_,{username})=>getDataUser(username),
     search:(_,{search},ctx)=>searchUsers(search,ctx),
     // FOLLOW
-    isFollow:(_,{username},ctx)=>isFollowController(username,ctx)
+    isFollow:(_,{username},ctx)=>isFollowController(username,ctx),
+    followers:(_,{username},ctx)=>followersController(username,ctx)
   },
   Mutation:{
     // User
@@ -31,7 +37,25 @@ const resolvers = {
     updateUser:async(_,{input},ctx)=>UpdateUser(input,ctx),
     // FOLLLOWR 
     follow:async(_,{username},ctx)=>followController(username,ctx),
-    unFollow:async(_,{username},ctx)=>unFollowController(username,ctx),
+    unFollow:async(_,{username},ctx)=>unFollowController(username,ctx), 
+    crearPost(_,{name}){
+      console.log(name)
+      pubsub.publish("NAME", { postCreated: name });
+      return true;
+    }   
+  },
+
+  Subscription:{
+    postCreated:{
+      subscribe:withFilter(
+        () => pubsub.asyncIterator(["NAME"]),
+        (payload,variables)=>{
+          console.log(payload)
+          return payload.postCreated===variables.name
+        }
+      )
+    }
   }
+  
 }
 module.exports =   resolvers;

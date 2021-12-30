@@ -56,11 +56,17 @@ const unFollowController= async(username,ctx)=>{
   else{
     return false;
   }
+}
+const followersController= async(username,ctx)=>{
 
+  const user= await ModelUser.findOne({username});
 
+  const followers =(await ModelFollow.find({follow:user.id}).populate('idUser')).map(i=>(i.idUser));
+  return followers;
 }
 module.exports = {
   followController,
   isFollowController,
-  unFollowController
+  unFollowController,
+  followersController
 };

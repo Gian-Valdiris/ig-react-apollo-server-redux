@@ -1,0 +1,14 @@
+
+.followers{
+  display: flex;
+  p{
+    margin: 5px;
+    font-size: 16px;
+    span{
+      font-weight: bold;
+    }
+    &.link{
+      cursor: pointer !important;
+    }
+  }
+}

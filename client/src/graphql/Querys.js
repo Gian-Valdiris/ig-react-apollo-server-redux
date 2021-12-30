@@ -8,6 +8,7 @@ const QUERY_LOGIN = gql`
   }
 `;
 
+
 const QUERY_GET_USER=gql`
   query Query($username: String) {
   getUser(username: $username) {
@@ -37,11 +38,24 @@ const IS_FOLLOW = gql`
     isFollow(username: $username)
   }
 `;
+const GET_FOLLOWERS = gql `
+  query Query($username: String!) {
+  followers(username: $username) {
+    username
+    avatar
+    name
+  }
+}
+
+
+
+`;
 export {
   QUERY_LOGIN,
   QUERY_GET_USER,
   SEARCH,
-  IS_FOLLOW
+  IS_FOLLOW,
+  GET_FOLLOWERS
 }
 
 
