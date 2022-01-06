@@ -1,0 +1,31 @@
+@import '../../../scss/index.sass';
+
+.modal-upload{
+  width: 600px;
+  height: 400px;
+  .drop-zone{
+    cursor: pointer !important;
+    width: 100% !important;
+    height: 100%;
+    border: 3px dashed #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i{
+      margin: auto;
+      font-size: 60px;
+    }
+    div{
+      text-align: center;
+    }
+  }
+  .btn-publish{
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 100% !important;
+    button{
+      border:0 !important;
+    }
+  }
+}

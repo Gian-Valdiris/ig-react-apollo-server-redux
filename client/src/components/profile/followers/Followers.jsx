@@ -6,18 +6,10 @@ import { useEffect, useState } from 'react';
 import {Modal} from 'semantic-ui-react';
 import {useHistory} from 'react-router-dom';
 function Followers({ username }) {
-  /*
-  const [followers,setFollowers] = useState([])
-  const [followed,setFollowed] = useState([]);
-  const [showModal,setShowModal] = useState(false)
-  const [dataModal,setDataModal] = useState([])
-  const [titleModal, settitleModal] = useState('')
-  */
   const [dataProfile, setDataProfile] = useState({ followers:[], followed:[], showModal:false, dataModal:[], titleModal:''})
   const {dataModal,followed,followers,showModal,titleModal} = dataProfile;
 
   const history = useHistory();
-  console.log(dataProfile)
   useQuery(GET_FOLLOWERS,{
     variables:{
       username
