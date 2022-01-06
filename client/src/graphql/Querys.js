@@ -45,17 +45,24 @@ const GET_FOLLOWERS = gql `
     avatar
     name
   }
+}`;
+
+const GET_FOLLOWED = gql`
+  query Followed($username: String!) {
+  followed(username: $username) {
+    username
+    avatar
+    name
+  }
 }
-
-
-
 `;
 export {
   QUERY_LOGIN,
   QUERY_GET_USER,
   SEARCH,
   IS_FOLLOW,
-  GET_FOLLOWERS
+  GET_FOLLOWERS,
+  GET_FOLLOWED
 }
 
 

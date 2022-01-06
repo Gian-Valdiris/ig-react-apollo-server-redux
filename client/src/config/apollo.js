@@ -36,7 +36,6 @@ const splitLink = split(
   },
   wsLink,
   authLink.concat(createUploadLink({uri:'http://localhost:3001/graphql'}))
-
 );
 
 const client = new ApolloClient({

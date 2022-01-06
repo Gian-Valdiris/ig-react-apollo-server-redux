@@ -1,5 +1,8 @@
 const  { PubSub,withFilter } = require('graphql-subscriptions');
+const ModelUser = require('../db/models/User')
+const ModelFollow=require('../db/models/Follow')
 const pubsub = new PubSub();
+
 
 const {
   createUser,
@@ -15,7 +18,8 @@ const {
   followController,
   isFollowController,
   unFollowController,
-  followersController
+  followersController,
+  followedControllers
 
 }= require('../controllers/follow');
 
@@ -27,7 +31,8 @@ const resolvers = {
     search:(_,{search},ctx)=>searchUsers(search,ctx),
     // FOLLOW
     isFollow:(_,{username},ctx)=>isFollowController(username,ctx),
-    followers:(_,{username},ctx)=>followersController(username,ctx)
+    followers:(_,{username},ctx)=>followersController(username,ctx),
+    followed:(_,{username},ctx)=>followedControllers(username,ctx)
   },
   Mutation:{
     // User
@@ -36,26 +41,60 @@ const resolvers = {
     deleteAvatar:async(_,__,ctx)=>deleteAvatarI(ctx),
     updateUser:async(_,{input},ctx)=>UpdateUser(input,ctx),
     // FOLLLOWR 
-    follow:async(_,{username},ctx)=>followController(username,ctx),
+    // follow:async(_,{username},ctx)=>followController(username,ctx),
+    follow:async(_,{username},ctx)=>{
+      const userFound = await ModelUser.findOne({username})
+      if (!userFound){
+        throw new Error('No se encuentra dicho usuario')
+      }
+      if( !ctx.user){
+        throw new Error('No hay token valido')
+      }
+      /* En este caso el usuario autenticado,el que viene en el 
+        context quiere seguir a el usuario de username,
+        entonces hacer que la subscripcion e informarle al username
+        que tiene mas seguidores
+        quiere decir que usernameGano un seguidor mas
+      */
+      try{
+        const follow = new ModelFollow({
+          idUser:ctx.user.id,
+          follow:userFound.id,
+        })
+        await follow.save();
+        //SACAR LA NUEVA CANTIDAD DE SEGUIDORES DE USERNAME
+        
+        const followers = (await ModelFollow.find({
+          follow:userFound.id
+        }).populate('idUser')).map(i=>(i.idUser))
+        console.log(followers)
+        pubsub.publish('FOLLOWERS',{followers:{
+          username,
+          followers:followers
+        }})
+        return true;
+      }
+      catch({message:error}){
+        return false;
+      }
+    },
     unFollow:async(_,{username},ctx)=>unFollowController(username,ctx), 
-    crearPost(_,{name}){
-      console.log(name)
-      pubsub.publish("NAME", { postCreated: name });
-      return true;
-    }   
   },
 
   Subscription:{
-    postCreated:{
+    followers:{
       subscribe:withFilter(
-        () => pubsub.asyncIterator(["NAME"]),
+        ()=>pubsub.asyncIterator(['FOLLOWERS']),
         (payload,variables)=>{
           console.log(payload)
-          return payload.postCreated===variables.name
+          return payload.followers.username===variables.username
         }
       )
     }
   }
   
 }
-module.exports =   resolvers;
+module.exports =   {
+  resolvers,
+  pubsub
+};
