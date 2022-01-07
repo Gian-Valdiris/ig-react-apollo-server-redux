@@ -23,6 +23,8 @@ const {
 
 }= require('../controllers/follow');
 
+const {publisController,getPublicationsControllers} = require('../controllers/Publication');
+
 
 const resolvers = {
     Query:{    
@@ -32,7 +34,9 @@ const resolvers = {
     // FOLLOW
     isFollow:(_,{username},ctx)=>isFollowController(username,ctx),
     followers:(_,{username},ctx)=>followersController(username,ctx),
-    followed:(_,{username},ctx)=>followedControllers(username,ctx)
+    followed:(_,{username},ctx)=>followedControllers(username,ctx),
+    // PUBLICATIONS
+    getPublications:(_,{username},ctx)=>getPublicationsControllers(username,ctx)
   },
   Mutation:{
     // User
@@ -73,12 +77,14 @@ const resolvers = {
           followers:followers
         }})
         return true;
-      }
+      } 
       catch({message:error}){
         return false;
       }
     },
     unFollow:async(_,{username},ctx)=>unFollowController(username,ctx), 
+    //PUBLICATION
+    publish:async(_,{file},ctx)=>publisController(file,ctx)
   },
 
   Subscription:{

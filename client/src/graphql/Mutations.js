@@ -42,11 +42,21 @@ mutation Mutation($username: String!) {
 }
 `;
 
+
+const PUBLISH= gql`
+  mutation Mutation($file: Upload) {
+  publish(file: $file) {
+    status
+    urlFile
+  }
+}`;
+
 export {
   REGISTER_MUTATION,
   UPDATE_AVATAR,
   DELETE_AVATAR,
   UPDATE_PROFILE,
   FOLLOW,
-  UN_FOLLOW
+  UN_FOLLOW,
+  PUBLISH
 }

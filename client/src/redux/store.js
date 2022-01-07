@@ -22,9 +22,7 @@ const store = configureStore({
       },
     }),
 });
-
 const persistor = persistStore(store)
-
 export {
   persistor,
   store,

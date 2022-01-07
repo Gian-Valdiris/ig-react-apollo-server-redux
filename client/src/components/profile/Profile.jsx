@@ -42,18 +42,14 @@ export default  function  Profile  ({data:{getUser}}){
       }
       default:
         break;
-    }
-    
+    } 
   }
-  
   return(
     <>
       <Grid className='profile'>
-
         <Column width={5} className='profile__left'>
           <Image src  = {avatar?avatar:imageNotFound} avatar onClick={()=> usuarioLogeado===username &&  handleModal('avatar')}  />
         </Column>
-        
         <Column width={11} className='profile__right'>
           <HeaderProfile getUser={getUser} handleModal={handleModal} />
           <Followers username={username} />

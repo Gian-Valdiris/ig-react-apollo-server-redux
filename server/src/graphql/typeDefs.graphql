@@ -53,6 +53,20 @@ type followSubscription{
   username:String
   followers:[User]
 }
+
+
+type Publish{
+  status:Boolean
+  urlFile:String
+}
+
+type Publications{
+  id:ID
+  idUser:ID
+  file:String
+  typeFile:String
+  createAt:String
+}
 # Aqui dentro de Query todas mis querys 
 type Query{
   # Un ejemplo aqui tenemos una query que se llama login y recibe como parametro el AuthInputLogin, y esta me devuelve el token
@@ -63,6 +77,9 @@ type Query{
   isFollow(username:String!):Boolean
   followers(username:String!):[User]
   followed(username:String!):[User]
+
+  # Onbtener las publicaciones
+  getPublications(username:String!):[Publications]
 }
 
 
@@ -76,6 +93,9 @@ type Mutation{
   # FOLLOWERS
   follow(username:String!):Boolean
   unFollow(username:String!):Boolean
+
+  # PARA PUBLICATION
+  publish(file:Upload):Publish
 }
 type Subscription {
   followers(username:String):followSubscription

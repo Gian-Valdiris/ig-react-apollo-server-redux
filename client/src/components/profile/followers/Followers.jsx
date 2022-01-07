@@ -1,15 +1,22 @@
-import './Followers.scss';
-import {useQuery, useSubscription} from '@apollo/client';
-import {GET_FOLLOWERS,GET_FOLLOWED} from '../../../graphql/Querys';
-import {SUBSCRIPTION_FOLLOWERS} from '../../../graphql/Subscriptions';
 import { useEffect, useState } from 'react';
+ // eslint-disable-next-line
+import {useHistory,useParams} from 'react-router-dom';
 import {Modal} from 'semantic-ui-react';
-import {useHistory} from 'react-router-dom';
+import {useQuery, useSubscription} from '@apollo/client';
+import {SUBSCRIPTION_FOLLOWERS} from '../../../graphql/Subscriptions';
+import {useDispatch}  from 'react-redux';
+
+
+import {GET_FOLLOWERS,GET_FOLLOWED,GET_PUBLICATIONS} from '../../../graphql/Querys';
+import {setPublications} from '../../../redux/reducers/publications';
+import './Followers.scss';
+
 function Followers({ username }) {
-  const [dataProfile, setDataProfile] = useState({ followers:[], followed:[], showModal:false, dataModal:[], titleModal:''})
-  const {dataModal,followed,followers,showModal,titleModal} = dataProfile;
+  const [dataProfile, setDataProfile] = useState({ followers:[], followed:[],publications:[], showModal:false, dataModal:[], titleModal:''})
+  const {dataModal,followed,followers,publications,showModal,titleModal} = dataProfile;
 
   const history = useHistory();
+  const  dispatch = useDispatch();
   useQuery(GET_FOLLOWERS,{
     variables:{
       username
@@ -32,6 +39,20 @@ function Followers({ username }) {
       })
     }
   })
+
+  useQuery(GET_PUBLICATIONS,{
+    variables:{
+      username
+    },
+    onCompleted(data){
+      setDataProfile({
+        ...dataProfile,
+        publications:data.getPublications
+      })
+      dispatch(setPublications(data.getPublications))
+    }
+  })
+
   const {data} = useSubscription(SUBSCRIPTION_FOLLOWERS,{
     variables:{
       username
@@ -44,6 +65,7 @@ function Followers({ username }) {
         followers:data.followers
       })
     }
+    // eslint-disable-next-line 
   },[data])
 
   const handleDataModal= (type)=>{
@@ -69,7 +91,7 @@ function Followers({ username }) {
     <>
     <div className="followers">
       <p>
-        <span>**</span> Publicaciones
+        <span>{publications.length}</span> Publicaciones
       </p>
       <p className='link' onClick={()=>handleDataModal('followers')}>
         <span >{followers.length}</span> seguidores

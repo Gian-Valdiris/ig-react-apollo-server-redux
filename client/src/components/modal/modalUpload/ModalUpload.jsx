@@ -4,13 +4,31 @@ import {useCallback, useState} from 'react';
 import {useDropzone} from 'react-dropzone';
 
 
-import {Button, Icon, Modal} from 'semantic-ui-react';
+import {Button, Icon, Modal,Dimmer,Loader,Segment} from 'semantic-ui-react';
+import {toast} from 'react-toastify';
+import {useMutation} from '@apollo/client';
+import {PUBLISH} from '../../../graphql/Mutations';
 import './ModalUpload.scss';
 
 
 export default function ModalUpload({showModal,setShowModal}){
 
+
   const [fileUpload, setfileUpload] = useState(null)
+
+  const [publishMutation,{loading}] = useMutation(PUBLISH,{
+    onCompleted(data){
+      setfileUpload(null)
+      setShowModal(false)
+      toast.success('Se creo la publicacion')
+  
+    },
+    onError(e){
+      toast.error(e)
+    }
+  })
+
+  // eslint-disable-next-line 
   const onDrop = useCallback(({0:file})=>{
     setfileUpload({
       type:'image',
@@ -22,6 +40,11 @@ export default function ModalUpload({showModal,setShowModal}){
   const handlePublish = ()=>{
     console.log(fileUpload)
     console.log('Publicando')
+    publishMutation({
+      variables:{
+        file:fileUpload.file
+      }
+    })
   }
 
   const {getInputProps,getRootProps} = useDropzone({
@@ -33,6 +56,7 @@ export default function ModalUpload({showModal,setShowModal}){
 
   return (
     <Modal open={showModal} onClose={()=>setShowModal(false)} size='small' className='modal-upload'>
+   
       <div {...getRootProps()} className='drop-zone' style={fileUpload && {border:'none'} }>
         <div>
         {
@@ -61,6 +85,16 @@ export default function ModalUpload({showModal,setShowModal}){
           </Button>
           </>
            
+        )
+      }
+      {
+        loading  && (
+        <Dimmer active >
+          <Loader />
+          <p>
+            Subiendo publicacion
+          </p>
+        </Dimmer>
         )
       }
     </Modal>

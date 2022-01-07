@@ -6,6 +6,7 @@ import { Dimmer, Loader } from 'semantic-ui-react'
 import {QUERY_GET_USER} from '../graphql/Querys';
 import Profile from '../components/profile';
 import UserNotFound from '../components/user/userNotFound';
+import Publications from '../components/publications';
 
 export default function User() {
 
@@ -22,5 +23,10 @@ export default function User() {
   if (error){
     return <UserNotFound />
   }
-  return (<Profile data = {data} />)
+  return (
+    <>
+    <Profile data = {data} />
+    <Publications />
+    </>
+  )
 }

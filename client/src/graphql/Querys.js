@@ -54,7 +54,20 @@ const GET_FOLLOWED = gql`
     avatar
     name
   }
+} 
+`;
+
+const GET_PUBLICATIONS = gql`
+  query GetPublications($username: String!) {
+  getPublications(username: $username) {
+    id
+    idUser
+    file
+    typeFile
+    createAt
+  }
 }
+
 `;
 export {
   QUERY_LOGIN,
@@ -62,7 +75,8 @@ export {
   SEARCH,
   IS_FOLLOW,
   GET_FOLLOWERS,
-  GET_FOLLOWED
+  GET_FOLLOWED,
+  GET_PUBLICATIONS
 }
 
 
