@@ -3,8 +3,7 @@ const PublicationModel = require('../db/models/Publication');
 const ModelUser  = require('../db/models/User');
 const {awsUploadImage} = require('../utils/aws-upload-image')
 
-const publish=async(file,ctx)=>{
-  console.log(ctx)
+const publish=async(file,ctx,pubsub)=>{
   // ASI PORQUE LLEGA COMO UNA PROMESA FILE.FILE
   const {mimetype,createReadStream}  =  file.file;
   const typeFile = mimetype.split('/')[1]
@@ -20,6 +19,20 @@ const publish=async(file,ctx)=>{
       typeFile,
     })
     await publication.save();
+    // comno se creo una nueva publicacion,entonces toca mandar las publicaciones
+    try{  
+      // sacar las publicaciones
+      const public= await getPublicationsControllers(ctx?.user?.username,ctx);
+      pubsub.publish('PUBLICATIONS',{
+        publications:{
+          username:ctx?.user?.username,
+          publicaciones:public
+        }
+      })
+    }
+    catch(e){
+      console.log(e);
+    }
     return {
       status:true,
       urlFile:result

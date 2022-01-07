@@ -3,7 +3,6 @@ const ModelUser = require('../db/models/User')
 const ModelFollow=require('../db/models/Follow')
 const pubsub = new PubSub();
 
-
 const {
   createUser,
   loginUser,
@@ -24,7 +23,6 @@ const {
 }= require('../controllers/follow');
 
 const {publisController,getPublicationsControllers} = require('../controllers/Publication');
-
 
 const resolvers = {
     Query:{    
@@ -84,7 +82,7 @@ const resolvers = {
     },
     unFollow:async(_,{username},ctx)=>unFollowController(username,ctx), 
     //PUBLICATION
-    publish:async(_,{file},ctx)=>publisController(file,ctx)
+    publish:async(_,{file},ctx)=>publisController(file,ctx,pubsub)
   },
 
   Subscription:{
@@ -94,6 +92,16 @@ const resolvers = {
         (payload,variables)=>{
           console.log(payload)
           return payload.followers.username===variables.username
+        }
+      )
+    },
+    publications:{
+      subscribe:withFilter(
+        ()=>pubsub.asyncIterator(['PUBLICATIONS']),
+        (payload,variables)=>{
+          console.log('DATA DE LAS SUBCRIPCIONES')
+          console.log({payload,variables})
+          return payload.publications.username===variables.username
         }
       )
     }

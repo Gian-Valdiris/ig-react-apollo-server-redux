@@ -59,7 +59,6 @@ type Publish{
   status:Boolean
   urlFile:String
 }
-
 type Publications{
   id:ID
   idUser:ID
@@ -68,6 +67,10 @@ type Publications{
   createAt:String
 }
 # Aqui dentro de Query todas mis querys 
+type publicationSubcription{
+  username:String
+  publicaciones:[Publications]
+}
 type Query{
   # Un ejemplo aqui tenemos una query que se llama login y recibe como parametro el AuthInputLogin, y esta me devuelve el token
   login(input:AuthInputLogin):Token
@@ -93,10 +96,12 @@ type Mutation{
   # FOLLOWERS
   follow(username:String!):Boolean
   unFollow(username:String!):Boolean
-
   # PARA PUBLICATION
   publish(file:Upload):Publish
 }
+
 type Subscription {
   followers(username:String):followSubscription
+  # SUBCRUPTIONS DE PUBLIACACTIONES
+  publications(username:String):publicationSubcription
 }
